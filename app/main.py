@@ -17,7 +17,7 @@ def list_items(min_price: float = Query(0.0)) -> list[Item]:
 
 
 @app.post("/items")
-def add_item(item: ItemCreate) -> Item:
+def add_item(item: ItemCreate = Query(min_length=3)) -> Item:
     return create_item(item)
 
 
