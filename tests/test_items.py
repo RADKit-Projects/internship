@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 
-from app.main import app
-
+from app.main import app  
 client = TestClient(app)
+
 
 
 def test_health() -> None:
@@ -22,7 +22,9 @@ def test_short_name() -> None:
 
 
 def test_update_to_duplicate_name() -> None:
-    client.post("/items", json={"name": "Grape", "price": 6})
+    r = client.post("/items", json={"name": "Grape", "price": 6})
+    print(r.status_code)
+
     resp = client.put("/items/1", json={"name": "Grape"})
     assert resp.status_code == 400 or resp.status_code == 422
 

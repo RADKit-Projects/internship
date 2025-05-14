@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 
+from app.database import items_db
 from app.crud import create_item, get_items, update_item_by_id
 from app.models import Item, ItemCreate, ItemUpdate
 
@@ -17,7 +18,7 @@ def list_items(min_price: float = Query(0.0)) -> list[Item]:
 
 
 @app.post("/items")
-def add_item(item: ItemCreate = Query(min_length=3)) -> Item:
+def add_item(item: ItemCreate) -> Item:
     return create_item(item)
 
 
@@ -25,5 +26,6 @@ def add_item(item: ItemCreate = Query(min_length=3)) -> Item:
 def update_item(item_id: int, item: ItemUpdate) -> Item:
     updated = update_item_by_id(item_id, item)
     if not updated:
-        raise HTTPException(status_code=404, detail="Item not found or duplicate name")
+        raise HTTPException(status_code=404, detail="Item not found")
+
     return updated

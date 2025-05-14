@@ -10,7 +10,7 @@ class Item(BaseModel):
 
 
 class ItemCreate(BaseModel):
-    name: str = Field(...)
+    name: str = Field(..., min_length=3)
     price: float
 
 
