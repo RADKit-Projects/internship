@@ -5,6 +5,7 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 
 def get_items(min_price: float = 0.0) -> List[Item]:
+    #TASK 2: Changed <= min_price to >= price
     return [Item(**item) for item in items_db if item["price"] >= min_price]
 
 
@@ -16,10 +17,13 @@ def create_item(item: ItemCreate) -> Item:
 
 
 def update_item_by_id(item_id: int, update: ItemUpdate) -> Tuple[Item | None, str]:
+    #TASK 5: 
+    #Check if name already exists in different index
     for item in items_db:
         if item["id"] != item_id and update.name == item["name"]:
                 raise HTTPException(status_code=400)
 
+    #If name is unique, update desired item
     for item in items_db:
         if item["id"] == item_id:
             if update.name:

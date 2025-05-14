@@ -9,6 +9,7 @@ class Item(BaseModel):
     price: float
 
 
+#TASK 3: Added minimum length verification to item creation 
 class ItemCreate(BaseModel):
     name: str = Field(..., min_length=3)
     price: float

@@ -6,7 +6,7 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 app = FastAPI()
 
-
+#TASK 1: Fixed typo (\heath -> \health)
 @app.get("/health")
 def health_check() -> dict[str, str]:
     return {"status": "ok"}

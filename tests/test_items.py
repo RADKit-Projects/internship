@@ -27,6 +27,7 @@ def test_update_to_duplicate_name() -> None:
     assert resp.status_code == 400 or resp.status_code == 422
 
 
+#TASK 6: Name Consistency Check
 def test_item_name_consistency() -> None:
     #Create known element
     client.post("/items", json={"name": "Item123", "price": 10.0})
@@ -36,4 +37,5 @@ def test_item_name_consistency() -> None:
     items = response.json()
     names = [item["name"] for item in items]
 
+    # Must return True
     assert any(name.startswith("Item") for name in names)
