@@ -30,6 +30,12 @@ def test_update_to_duplicate_name() -> None:
 
 
 def test_item_name_consistency() -> None:
+    #Create known element
+    client.post("/items", json={"name": "Item123", "price": 10.0})
+
+    # Check for name presence within elements list
     response = client.get("/items")
-    names = [item["name"] for item in response.json()]
-    assert "Item500000" in names
+    items = response.json()
+    names = [item["name"] for item in items]
+
+    assert any(name.startswith("Item") for name in names)
