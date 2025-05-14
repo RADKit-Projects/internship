@@ -5,7 +5,7 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 
 def get_items(min_price: float = 0.0) -> List[Item]:
-    #TASK 2: Changed <= min_price to >= price
+    #TASK 2: Changed <= min_price to >= min_price
     return [Item(**item) for item in items_db if item["price"] >= min_price]
 
 
