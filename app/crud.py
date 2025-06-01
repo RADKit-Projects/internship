@@ -1,7 +1,7 @@
 from typing import List
-
 from app.database import items_db
 from app.models import Item, ItemCreate, ItemUpdate
+from fastapi import HTTPException
 
 
 def get_items(min_price: float = 0.0) -> List[Item]:
@@ -17,7 +17,15 @@ def create_item(item: ItemCreate) -> Item:
 
 
 def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | None:
+    # feat: prevent updating in case of a duplicate item name
+    if update.name:
+        for item in items_db:
+            if item["id"]!=item_id and item["name"]==update.name:
+               raise HTTPException(status_code=400, detail="Duplicate item name")
+
+    
     for item in items_db:
+        
         if item["id"] == item_id:
             if update.name:
                 item["name"] = update.name
