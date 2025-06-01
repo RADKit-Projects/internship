@@ -28,6 +28,7 @@ def test_update_to_duplicate_name() -> None:
 
 
 def test_item_name_consistency() -> None:
+    client.post("/items",json={"name":"Item500000","price":10})
     response = client.get("/items")
     names = [item["name"] for item in response.json()]
     assert "Item500000" in names
