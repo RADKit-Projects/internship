@@ -12,7 +12,10 @@ def get_items(min_price: float = 0.0, page_number: int = 0, size: int = 100) -> 
     paginated_items = filtered_items[start:end] # works because python slicing is out of bounds safe
     return [Item(**item) for item in paginated_items]
 
-def create_item(item: ItemCreate) -> Item:
+def create_item(item: ItemCreate) -> Item | None:
+    if item.name in existing_names:
+        return None
+    
     new_id = max(item["id"] for item in items_db) + 1
     new_item = {"id": new_id, **item.model_dump()}
     items_db.append(new_item)

@@ -21,7 +21,10 @@ def list_items(
 
 @app.post("/items")
 def add_item(item: ItemCreate) -> Item:
-    return create_item(item)
+    created = create_item(item)
+    if not created:
+        raise HTTPException(status_code=409, detail="Item not created because duplicate name")
+    return created
 
 
 @app.put("/items/{item_id}")
