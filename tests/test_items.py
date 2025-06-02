@@ -32,3 +32,8 @@ def test_item_name_consistency() -> None:
     response = client.get("/items")
     names = [item["name"] for item in response.json()]
     assert "Item500000" in names
+
+#test for edge case updating name to one smaller then 3 char
+def test_short_name_updade() -> None:
+    resp=client.put("/items/1", json={"name": "Gr"})
+    assert resp.status_code == 422

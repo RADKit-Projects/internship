@@ -11,7 +11,8 @@ def get_items(min_price: float = 0.0) -> List[Item]:
 
 def create_item(item: ItemCreate) -> Item:
     new_id = max(item["id"] for item in items_db) + 1
-    new_item = {"id": new_id, **item.dict()}
+    #fix:used model_dump() has dic() is deprecated 
+    new_item = {"id": new_id, **item.model_dump()}
     items_db.append(new_item)
     return Item(**new_item)
 
