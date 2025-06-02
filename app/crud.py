@@ -4,12 +4,20 @@ from app.models import Item, ItemCreate, ItemUpdate
 from fastapi import HTTPException
 
 
+
 def get_items(min_price: float = 0.0) -> List[Item]:
     #fix: fixed comparison logic now returns items above the mim_price has excepted
     return [Item(**item) for item in items_db if item["price"] >= min_price]
 
 
 def create_item(item: ItemCreate) -> Item:
+    # feat: prevent updating in case of a duplicate item name
+    if item.name:
+        for itemm in items_db:
+            if itemm["name"]==item.name:
+               raise HTTPException(status_code=400, detail="Duplicate item name")
+
+
     new_id = max(item["id"] for item in items_db) + 1
     #fix:used model_dump() has dic() is deprecated 
     new_item = {"id": new_id, **item.model_dump()}
