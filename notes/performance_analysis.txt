@@ -1,0 +1,39 @@
+
+#  Performance Analysis – `/items` Endpoint
+
+##  Problems
+
+1. The `/items` endpoint currently returns the entire dataset in one response when not using `min_price` filtering, which causes performance issues as the dataset grows.
+
+2. The current logic for checking duplicate item names becomes significantly slower with larger datasets, due to linear search in an in-memory list.
+
+3. The current approach of loading the full dataset into memory on app startup can introduce unnecessary memory usage and scalability limitations.
+
+---
+
+##  Proposed Improvements / Fixes
+
+### 1. Pagination
+
+    - Add query parameters like `offset` and `limit` (or `page` and `page_size`).
+    - Return only a subset of items as requested by the frontend.
+    - Reduces response size and improves latency.
+    - Can be combined with filters (e.g., `min_price`) for flexible querying.
+
+### 2. Optimize `database.py` Indexing
+
+- Introduce basic in-memory indexing to improve search speed by:
+    - Using `dict` for fast lookups by name or ID.
+    - Replacing linear name checks with a `set` or `dict`:
+    - Reduces the time complexity of duplicate checks from O(n²) to O(n).
+
+
+### 3. Using a Real Database (e.g., PostgreSQL)
+
+    - Native and efficient pagination using `LIMIT` and `OFFSET`
+    - Fast filtering using indexed columns
+    - Only loads queried data (lazy loading).
+    - Much more scalable for large datasets.
+
+---
+
