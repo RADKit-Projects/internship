@@ -10,10 +10,13 @@ app = FastAPI()
 def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
-
 @app.get("/items")
-def list_items(min_price: float = Query(0.0)) -> list[Item]:
-    return get_items(min_price=min_price)
+def list_items(
+    min_price: float = Query(0.0),
+    page_number: int = Query(0, ge=0),
+    size: int = Query(100, gt=0)
+) -> list[Item]:
+    return get_items(min_price=min_price, page_number=page_number, size=size)
 
 
 @app.post("/items")

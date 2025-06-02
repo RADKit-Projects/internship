@@ -4,9 +4,12 @@ from app.database import items_db
 from app.models import Item, ItemCreate, ItemUpdate
 
 
-def get_items(min_price: float = 0.0) -> List[Item]:
-    return [Item(**item) for item in items_db if item["price"] >= min_price]
-
+def get_items(min_price: float = 0.0, page_number: int = 0, size: int = 100) -> List[Item]:
+    filtered_items = [item for item in items_db if item["price"] >= min_price]
+    start = page_number * size
+    end = start + size
+    paginated_items = filtered_items[start:end] # works because python slicing is out of bounds safe
+    return [Item(**item) for item in paginated_items]
 
 def create_item(item: ItemCreate) -> Item:
     new_id = max(item["id"] for item in items_db) + 1
