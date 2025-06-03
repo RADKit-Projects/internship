@@ -19,4 +19,5 @@ class ItemCreate(BaseModel):
 class ItemUpdate(BaseModel):
     #fix:name must be at least 3 char
     name: Optional[str] = Field(min_length=3)
-    price: Optional[float] = None
+    #fix price must be greater or equal to 0
+    price: Optional[float] = Field(ge=0)
