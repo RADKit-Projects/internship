@@ -19,6 +19,10 @@ def test_short_name() -> None:
     response = client.post("/items", json={"name": "ab", "price": 5})
     assert response.status_code == 422
 
+def test_create_duplicate_item() -> None:
+    client.post("/items", json={"name": "Mango", "price": 4.0})
+    response = client.post("/items", json={"name": "Mango", "price": 6.0})
+    assert response.status_code == 409 or response.status_code == 422
 
 def test_update_to_duplicate_name() -> None:
     client.post("/items", json={"name": "Grape", "price": 6})
