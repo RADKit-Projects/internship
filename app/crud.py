@@ -5,6 +5,12 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 existing_names = set(item["name"] for item in items_db)
 
+def get_item(item_id: int) -> Item | None:
+    for item in items_db:
+        if item["id"] == item_id:
+            return Item(**item)
+    return None
+
 def get_items(min_price: float = 0.0, page_number: int = 0, size: int = 100) -> List[Item]:
     filtered_items = [item for item in items_db if item["price"] >= min_price]
     start = page_number * size
