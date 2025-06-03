@@ -29,7 +29,6 @@ def test_update_to_duplicate_name() -> None:
     resp = client.put("/items/1", json={"name": "Grape"})
     assert resp.status_code == 404 or resp.status_code == 422
 
-
 def test_item_name_consistency() -> None:
     new_name = "TestItem123"
     response = client.post("/items", json={"name": new_name, "price": 15})
@@ -43,4 +42,15 @@ def test_item_name_consistency() -> None:
     item = response.json()
     assert item["name"] == new_name
 
+def test_get_nonexistent_item() -> None:
+    new_item = {"name": "TemporaryTestItem", "price": 9.99}
+    response = client.post("/items", json=new_item)
+    assert response.status_code == 200
+    created = response.json()
+    created_id = created["id"]
+
+    nonexistent_id = created_id + 1
+
+    response = client.get(f"/items/{nonexistent_id}")
+    assert response.status_code == 404
 
