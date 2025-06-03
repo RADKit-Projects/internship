@@ -44,3 +44,9 @@ def test_create_with_duplicate_name() -> None:
     resp = client.post("/items", json={"name": "Grape", "price": 6})
     assert resp.status_code == 400 or resp.status_code == 422
 
+#test: edge case creating a new item with a negative price
+def test_create_with_negative_price() -> None:
+    resp = client.post("/items", json={"name": "testN", "price": -6})
+    assert resp.status_code == 400 or resp.status_code == 422
+
+
