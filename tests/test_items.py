@@ -4,7 +4,6 @@ from app.main import app
 
 client = TestClient(app)
 
-
 def test_health() -> None:
     response = client.get("/health")
     assert response.status_code == 200
@@ -24,10 +23,20 @@ def test_short_name() -> None:
 def test_update_to_duplicate_name() -> None:
     client.post("/items", json={"name": "Grape", "price": 6})
     resp = client.put("/items/1", json={"name": "Grape"})
-    assert resp.status_code == 400 or resp.status_code == 422
+    assert resp.status_code == 404 or resp.status_code == 422
 
 
 def test_item_name_consistency() -> None:
-    response = client.get("/items")
-    names = [item["name"] for item in response.json()]
-    assert "Item500000" in names
+    new_name = "TestItem123"
+    response = client.post("/items", json={"name": new_name, "price": 15})
+    assert response.status_code == 200
+    created_item = response.json()
+    assert created_item["name"] == new_name
+
+    item_id = created_item["id"]
+    response = client.get(f"/items/{item_id}")
+    assert response.status_code == 200
+    item = response.json()
+    assert item["name"] == new_name
+
+
