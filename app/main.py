@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 
-from app.crud import create_item, get_items, update_item_by_id, get_item
+from app.crud import create_item, get_items, update_item_by_id, get_item_by_id
 from app.models import Item, ItemCreate, ItemUpdate
 
 app = FastAPI()
@@ -11,8 +11,8 @@ def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
 @app.get("/items/{item_id}")
-def get_item_by_id(item_id: int) -> Item:
-    item = get_item(item_id)
+def get_item(item_id: int) -> Item:
+    item = get_item_by_id(item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
     return item

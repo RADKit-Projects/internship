@@ -5,7 +5,7 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 existing_names = set(item["name"] for item in items_db)
 
-def get_item(item_id: int) -> Item | None:
+def get_item_by_id(item_id: int) -> Item | None:
     for item in items_db:
         if item["id"] == item_id:
             return Item(**item)
