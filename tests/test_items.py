@@ -65,3 +65,13 @@ def test_get_items_pagination() -> None:
     data = response.json()
     assert isinstance(data, list)
     assert len(data) == page_size
+
+def test_invalid_pagination_params() -> None:
+    resp = client.get("/items?page_number=-1&size=3")
+    assert resp.status_code == 422
+
+    resp = client.get("/items?page_number=0&size=-5")
+    assert resp.status_code == 422
+
+    resp = client.get("/items?page_number=abc&size=xyz")
+    assert resp.status_code == 422
