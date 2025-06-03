@@ -10,10 +10,14 @@ class Item(BaseModel):
 
 
 class ItemCreate(BaseModel):
-    name: str = Field(...)
-    price: float
+    #fix name must be at least 3 char
+    name: str = Field(min_length=3)
+    #fix price must be greater or equal to 0
+    price: float =Field(ge=0)
 
 
 class ItemUpdate(BaseModel):
-    name: Optional[str] = None
-    price: Optional[float] = None
+    #fix:name must be at least 3 char
+    name: Optional[str] = Field(min_length=3)
+    #fix price must be greater or equal to 0
+    price: Optional[float] = Field(ge=0)

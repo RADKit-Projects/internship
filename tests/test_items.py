@@ -28,6 +28,30 @@ def test_update_to_duplicate_name() -> None:
 
 
 def test_item_name_consistency() -> None:
+    client.post("/items",json={"name":"Item500000","price":10})
     response = client.get("/items")
     names = [item["name"] for item in response.json()]
     assert "Item500000" in names
+
+#test: edge case updating name to one smaller then 3 char
+def test_short_name_updade() -> None:
+    resp=client.put("/items/1", json={"name": "Gr"})
+    assert resp.status_code == 422
+
+#test: edge case creating a new item with an exixting name (a duplicate)
+def test_create_with_duplicate_name() -> None:
+    client.post("/items", json={"name": "Grape", "price": 6})
+    resp = client.post("/items", json={"name": "Grape", "price": 6})
+    assert resp.status_code == 400 or resp.status_code == 422
+
+#test: edge case creating a new item with a negative price
+def test_create_with_negative_price() -> None:
+    resp = client.post("/items", json={"name": "testN", "price": -6})
+    assert resp.status_code == 400 or resp.status_code == 422
+
+#test: edge case updating a item with a negative price
+def test_update_to_negative_price() -> None:
+    resp = client.put("/items/1", json={"name": "testNP", "price": -6})
+    assert resp.status_code == 400 or resp.status_code == 422
+
+
