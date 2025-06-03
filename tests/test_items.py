@@ -54,3 +54,14 @@ def test_get_nonexistent_item() -> None:
     response = client.get(f"/items/{nonexistent_id}")
     assert response.status_code == 404
 
+def test_get_items_pagination() -> None:
+    page_size = 3
+    for i in range(page_size):
+        response = client.post("/items", json={"name": f"PaginateTestItem{i}", "price": 10})
+        assert response.status_code == 200
+
+    response = client.get(f"/items?page_number=0&size={page_size}")
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data, list)
+    assert len(data) == page_size
