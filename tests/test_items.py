@@ -75,3 +75,18 @@ def test_invalid_pagination_params() -> None:
 
     resp = client.get("/items?page_number=abc&size=xyz")
     assert resp.status_code == 422
+
+def test_create_and_delete_item() -> None:
+    new_item = {"name": "DeleteMeTest", "price": 12.5}
+    response = client.post("/items", json=new_item)
+    assert response.status_code == 200
+    created_item = response.json()
+    item_id = created_item["id"]
+
+    
+    delete_response = client.delete(f"/items/{item_id}")
+    assert delete_response.status_code == 204
+
+   
+    get_response = client.get(f"/items/{item_id}")
+    assert get_response.status_code == 404

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Query
 
-from app.crud import create_item, get_items, update_item_by_id, get_item_by_id
+from app.crud import create_item, get_items, update_item_by_id, get_item_by_id, delete_item_by_id
 from app.models import Item, ItemCreate, ItemUpdate
 
 app = FastAPI()
@@ -40,3 +40,9 @@ def update_item(item_id: int, item: ItemUpdate) -> Item:
     if not updated:
         raise HTTPException(status_code=404, detail="Item not found or duplicate name")
     return updated
+
+@app.delete("/items/{item_id}", status_code=204)
+def delete_item(item_id: int) -> None:
+    deleted = delete_item_by_id(item_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Item not found")

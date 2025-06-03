@@ -42,3 +42,11 @@ def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | None:
                 item["price"] = update.price
             return Item(**item)
     return None
+
+def delete_item_by_id(item_id: int) -> bool:
+    for index, item in enumerate(items_db):
+        if item["id"] == item_id:
+            existing_names.remove(item["name"])
+            items_db.pop(index)
+            return True
+    return False
