@@ -49,4 +49,9 @@ def test_create_with_negative_price() -> None:
     resp = client.post("/items", json={"name": "testN", "price": -6})
     assert resp.status_code == 400 or resp.status_code == 422
 
+#test: edge case updating a item with a negative price
+def test_update_to_negative_price() -> None:
+    resp = client.put("/items/1", json={"name": "testNP", "price": -6})
+    assert resp.status_code == 400 or resp.status_code == 422
+
 
