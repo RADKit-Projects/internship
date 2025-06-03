@@ -2,7 +2,7 @@
 ## **Issue:** 
 Endpoint for `/health` was incorrectly defined as `/heath`, causing a 404 Not found error.
 
-**Failing Test:**  /tests/test_health.py -> `test_health`
+**Failing Test:**  /tests/test_items.py -> `test_health`
 
 ## **Fix:** 
 Corrected the typo in `main.py` *(line 9)* from `/heath` to `/health`.
