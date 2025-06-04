@@ -21,6 +21,24 @@ def test_short_name() -> None:
     assert response.status_code == 422
 
 
+def test_negative_price() -> None:
+    response = client.post("/items", json={"name": "abc", "price": -1})
+    assert response.status_code == 422
+
+
+def test_update_item() -> None:
+    response = client.post("/items", json={"name": "abc", "price": 5})
+    assert response.status_code == 200
+    item_id = response.json()["id"]
+
+    name, price = "UpdatedItem", 10.0
+    update_response = client.put(f"/items/{item_id}", json={"name": name, "price": price})
+    assert update_response.status_code == 200
+    updated_item = update_response.json()
+    assert updated_item["name"] == name
+    assert updated_item["price"] == price
+
+
 def test_update_to_duplicate_name() -> None:
     client.post("/items", json={"name": "Grape", "price": 6})
     resp = client.put("/items/1", json={"name": "Grape"})
