@@ -18,6 +18,8 @@ def list_items(min_price: float = Query(0.0)) -> list[Item]:
 
 @app.post("/items")
 def add_item(item: ItemCreate) -> Item:
+    if len(item.name) < 3:
+        raise HTTPException(status_code=422, detail="Item name must be at least 3 characters long")
     return create_item(item)
 
 
