@@ -26,11 +26,11 @@ Added validation in the `Item`, `ItemCreate`, and `ItemUpdate` models within `mo
 
 1. After reviewing the code and checking that the `test_short_name` test was passing incorrectly,
    I went to the `models.py` file and added validation for the `name` field to ensure it is at least three characters
-   long
-   in the `ItemCreate`, `ItemUpdate` and `Item` models (`min_length=3`).
+   long in the `ItemCreate`, `ItemUpdate` and `Item` models (`min_length=3`).
+
 2. After reviewing the code, I also noticed that there was no validation for negative prices, so I also altered the
-   models
-   to ensure that the `price` field is non-negative (`ge=0`).
+   models to ensure that the `price` field is non-negative (`ge=0`).
+
 3. Additionally, I added tests for negative prices (`test_negative_price`) and item updates (`test_update_item`)
    to ensure that these functionalities work as expected.
 
