@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import FastAPI, HTTPException, Query
 
 from app.crud import create_item, get_items, update_item_by_id
@@ -12,8 +14,9 @@ def health_check() -> dict[str, str]:
 
 
 @app.get("/items")
-def list_items(min_price: float = Query(0.0)) -> list[Item]:
-    return get_items(min_price=min_price)
+def list_items(min_price: float = Query(0.0),
+               limit: Optional[int] = Query(None, ge=1)) -> list[Item]:
+    return get_items(min_price=min_price, limit=limit)
 
 
 @app.post("/items")
