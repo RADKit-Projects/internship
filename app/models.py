@@ -15,5 +15,5 @@ class ItemCreate(BaseModel):
 
 
 class ItemUpdate(BaseModel):
-    name: Optional[str] = None
+    name: Optional[str] = Field(min_length=3, description="Name must be at least 3 characters long")
     price: Optional[float] = None
