@@ -29,6 +29,11 @@ def test_update_to_duplicate_name() -> None:
     resp = client.put("/items/1", json={"name": "Grape"})
     assert resp.status_code == 404 or resp.status_code == 422
 
+def test_update_to_short_name() -> None:
+    client.post("/items", json={"name": "Grape", "price": 6})
+    resp = client.put("/items/1", json={"name": "ab"})
+    assert resp.status_code == 404 or resp.status_code == 422
+
 def test_item_name_consistency() -> None:
     new_name = "TestItem123"
     response = client.post("/items", json={"name": new_name, "price": 15})
