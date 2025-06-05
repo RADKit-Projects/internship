@@ -12,8 +12,8 @@ def health_check() -> dict[str, str]:
 
 
 @app.get("/items")
-def list_items(min_price: float = Query(0.0)) -> list[Item]:
-    return get_items(min_price=min_price)
+def list_items(min_price: float = Query(0.0), limit: int = Query(100, ge=1, le=100000000), offset: int = Query(0, ge=0)) -> list[Item]:
+    return get_items(min_price=min_price, limit=limit, offset=offset)
 
 
 @app.post("/items")
@@ -27,5 +27,5 @@ def add_item(item: ItemCreate) -> Item:
 def update_item(item_id: int, item: ItemUpdate) -> Item:
     updated = update_item_by_id(item_id, item)
     if not updated:
-        raise HTTPException(status_code=404, detail="Item not found or duplicate name")
+        raise HTTPException(status_code=400, detail="Item not found or duplicate name")
     return updated
