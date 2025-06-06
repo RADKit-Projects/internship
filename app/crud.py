@@ -5,6 +5,7 @@ from app.models import Item, ItemCreate, ItemUpdate
 
 
 def get_items(min_price: float = 0.0, limit: int = 100, offset: int = 0) -> List[Item]:
+    # Apply filtering and pagination for items, to increase performance
     filtered = [Item(**item) for item in items_db.values() if item["price"] >= min_price]
     return filtered[offset:offset + limit]
 
@@ -17,6 +18,7 @@ def create_item(item: ItemCreate) -> Item:
 
 
 def update_item_by_id(item_id: int, update: ItemUpdate) -> Item | None:
+    # Check for duplicate name
     if update.name and any(
         item["name"] == update.name for item in items_db.values() if item["id"] != item_id
     ):
