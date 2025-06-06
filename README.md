@@ -40,6 +40,13 @@ pytest
 │   └── database.py
 ├── tests
 │   └── test_items.py
+├── Tasks_Summary
+│   ├── Task_1.md
+│   ├── Task_2.md
+│   ├── Task_3.md
+│   ├── Task_4.md
+│   ├── Task_5.md
+│   └── Task_6.md
 ├── requirements.txt
 └── README.md
 ```
@@ -49,17 +56,17 @@ pytest
 ## Tasks Summary
 There are six issues embedded in this codebase. Some are obvious, while others are subtle or hinted at via failing tests or unexpected behavior. Your job is to investigate, identify the root causes, and fix them. We encourage you to think critically and communicate your reasoning in the pull request.
 
-**Task 1:** There is a typo in one of the route paths. Find and correct it.
+**Task 1:** There is a typo in one of the route paths. Find and correct it. [Task 1 Summary](Tasks_Summary/Task_1.md).
 
-**Task 2:** The `/items` endpoint does not behave correctly when filtering by `min_price`. Investigate and fix the logic.
+**Task 2:** The `/items` endpoint does not behave correctly when filtering by `min_price`. Investigate and fix the logic. [Task 2 Summary](Tasks_Summary/Task_2.md).
 
-**Task 3:** Item creation currently allows names that are too short. Review the expected behavior, minimum of three characters, and add appropriate validation.
+**Task 3:** Item creation currently allows names that are too short. Review the expected behavior, minimum of three characters, and add appropriate validation. [Task 3 Summary](Tasks_Summary/Task_3.md).
 
-**Task 4:** The `/items` endpoint exhibits performance issues as the item list grows. Consider the current implementation and propose improvements.
+**Task 4:** The `/items` endpoint exhibits performance issues as the item list grows. Consider the current implementation and propose improvements. [Task 4 Summary](Tasks_Summary/Task_4.md).
 
-**Task 5:** There is an edge case involving duplicate item names when updating an item. This case is not properly handled and could cause inconsistencies.
+**Task 5:** There is an edge case involving duplicate item names when updating an item. This case is not properly handled and could cause inconsistencies. [Task 5 Summary](Tasks_Summary/Task_5.md).
 
-**Task 6:** One test assumes a specific item exists in the large dataset. This creates fragility and reflects poor test design. Improve the test to ensure robustness without relying on hardcoded assumptions.
+**Task 6:** One test assumes a specific item exists in the large dataset. This creates fragility and reflects poor test design. Improve the test to ensure robustness without relying on hardcoded assumptions. [Task 6 Summary](Tasks_Summary/Task_6.md).
 
 ---
 
